@@ -6,15 +6,18 @@ import UIKit
 
 // Your function here
 func average(of array: Array<Double>) -> Double {
-    
+
     let arrayCount = Double(array.count)
     var sum = 0.0
-    
+
     for element in array {
         sum += element
     }
     return sum / arrayCount
 }
+
+average(of: [9.0, 6.8, 5.5, 0.3])
+
 let testCasesOne: [([Double], Double)] = [
     (input: [1,2,3,4,5], expectedOutput: 3),
     (input: [1,42,1,541,42,6], expectedOutput: 105.5),
@@ -32,36 +35,63 @@ for (input, expectedOutput) in testCasesOne {
 // Write a function named frequencyDictionary(of:) that takes a String as input and returns a dictionary that maps each character its number of occurrances
 
 // Your function here
-func frequencyDictionary(of str: String) -> <Dictionary> {
-    var index in char
-    for i in char {
-        index += i
+
+func frequencyDictionary(of str: String) -> [Character:Int] {
+    var freqChar = [Character:Int]()
+    for char in str {
+        if let count = freqChar[char] {
+            freqChar[char] = count + 1
+        } else {
+            freqChar[char] = 1
+        }
+        
     }
+    return freqChar
 }
 
+
+frequencyDictionary(of: "hello")
 let testCasesTwo: [(String, [Character: Int])] = [
     (input: "hello", expectedOutput: ["h": 1, "e": 1, "l": 2, "o": 1]),
     (input: "aaaaaAAA", expectedOutput: ["a": 5, "A":3]),
     (input: "More words", expectedOutput: ["M": 1, "o": 2, "r": 2, "e": 1, " ": 1, "w": 1, "d": 1, "s": 1])
 ]
 
-//for (input, expectedOutput) in testCasesTwo {
-//    let output = frequencyDictionary(of: input)
-//    assert(output == expectedOutput, "Was expecting \(expectedOutput) for input \(input), but got \(output)")
-//}
+for (input, expectedOutput) in testCasesTwo {
+    let output = frequencyDictionary(of: input)
+    assert(output == expectedOutput, "Was expecting \(expectedOutput) for input \(input), but got \(output)")
+}
 
 
 // Question Three
 
-// Write a function called fizzBuzz(upto:) that returns an array containing the numbers from 1 to n as Strings with the following replacements:
-func fizzBuzz(upto:   ) {
-    return(string)
-}
+//// Write a function called fizzBuzz(upto:) that returns an array containing the numbers from 1 to n as Strings with the following replacements:
+//func fizzBuzz(upto:   ) {
+//    return(string)
+//}
 // If the number if a multiple of 3, replace it with "Fizz"
 // If the number is a multiple of 5, replace it with "Buzz"
 // If the number is a multiple of 3 AND 5, replace it with "FizzBuzz"
 
+
+// *******************************************INTERVIEW QUESTION **********************************
 // Your function here
+func fizzBuzz(upto: Int) -> [String] {
+    var fizzBuzzArray = [String]()
+    for num in 1...upto {
+        if num % 3 == 0 && num % 5 == 0 {
+            fizzBuzzArray.append("FizzBuzz")
+        } else if num % 5 == 0 {
+            fizzBuzzArray.append("Buzz")
+        } else if num % 3 == 0 {
+            fizzBuzzArray.append("Fizz")
+        } else {
+        }
+    }
+     
+    return fizzBuzzArray
+}
+fizzBuzz(upto: 31)
 
 let testCasesThree = [
     (input: 20, expectedOutput: ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz", "16", "17", "Fizz", "19", "Buzz"]),
@@ -75,12 +105,26 @@ let testCasesThree = [
 //    assert(output == expectedOutput, "Was expecting \(expectedOutput) for input \(input), but got \(output)")
 //}
 
+//**************************************************************************************************
 
 // Question Four
 
 // Write a function named value(_:isGreaterThanAverageOf:) that takes in an array of Doubles and a Double and returns whether the Double is greater than the average
+func value(_ num:Double, isGreaterThanAverageOf arr:[Double]) -> Bool { //if a double is greater than the average of a Double then true or false
+    let arraySum = Double(arr.reduce(0, +))
+    let arrayCount = Double(arr.count)
+    let arrayAverage = Double(arraySum/arrayCount)
+    var isGreaterThanAverage = false
+    if num > arrayAverage {
+        isGreaterThanAverage = true
+    }
+    return isGreaterThanAverage
+}
 
-// Your function here
+value(7.0, isGreaterThanAverageOf: [1.0,2,3,4,5])
+
+
+
 
 let testCasesFour = [
     (inputOne: 4.0, inputTwo: [1.0,2,3,4,5], expectedOutput: true),
@@ -90,10 +134,22 @@ let testCasesFour = [
     (inputOne: 105.4, inputTwo: [1,42,1,541,42,5], expectedOutput: true),
 ]
 
-//for (inputOne, inputTwo, expectedOutput) in testCasesFour {
-//    let output = value(inputOne, isGreaterThanAverageOf: inputTwo)
-//    assert(output == expectedOutput, "Was expecting \(expectedOutput) for inputs \(inputOne) and \(inputTwo), but got \(output)")
-//}
+    
+    //Another way
+    func value2(_ input:Double, isGreaterThanAverageOf:[Double]) -> Bool {
+        let average = isGreaterThanAverageOf.reduce(0, +)/Double(isGreaterThanAverageOf.count)
+
+        return input > average
+    }
+value2(6.0, isGreaterThanAverageOf:[1,3,6,7.3,45])
+
+//let testCasesFour = [
+//    (inputOne: 4.0, inputTwo: [1.0,2,3,4,5], expectedOutput: true),
+//    (inputOne: 2, inputTwo: [1,2,3,4,5], expectedOutput: false),
+//    (inputOne: 3, inputTwo: [1,2,3,4,5], expectedOutput: false),
+//    (inputOne: 100.8, inputTwo: [1,42,1,541,42,5], expectedOutput: false),
+//    (inputOne: 105.4, inputTwo: [1,42,1,541,42,5], expectedOutput: true),
+//]
 
 // Question Five
 
@@ -109,7 +165,14 @@ let testCasesFive = [
     (input: [807,909,-22,424,244,873,-907,-350,-780,576,-177,278,-855,296,-33,-609,-664,-126,-469,-57,-376,-424,-477,-795,-481,-806,545,727,-879,210,-114,-783,-156,45,781,369,35,900,904,-2,168,489,-329,608,-287,40,442,362,-560,236,-583,698,544,-154,478,535,-397,363,470,-49,49,631,-62,-293,-419,-528,753,-809,-48,-888,606,-889,-908,672,-783,-921,-198,-428,701,-30,106,500,-106,199,-793,392,873,330,366,45,840,649,-135,-850,174,-338,901,-753,402,-62,554,-579,863,955,-999,-13,851,760,-523,-968,225,-173,-605,-759,306,657,844,168,-270,883,963,-835,624,570,705,333,-293,283,382,926,839,264,602,-940,160,-369,-770,-792,722,321,88,-176,-911,203,486,-175,-529,187,-668,518,-282,162,-165,-34,544,538,-828,-562,-154,591,345,-241,962,801,-632,-921,-710,588,-642,113,128,-242,56,716,-709,232,-870,241,-612,-583,-199,762,-601,-410,-896,-493,664,531,-613,-285,-951,-589,243,819,-195,911,-701,-368,-85,-316], expectedOutput: -968)
 ]
 
-//for (input, expectedOutput) in testCasesFive {
-//    let output = secondSmallestValue(in: input)
-//    assert(output == expectedOutput, "Was expecting \(expectedOutput) for input \(input), but got \(output)")
-//}
+
+func secondSmallestValue(num:Array<Int>) -> Int {
+    let sortedIntArray = num.sorted()
+    return sortedIntArray[1]
+}
+secondSmallestValue(num: [807,909,-22,424,244,873,-907,-350,-780,576,-177,278,-855,296,-33,-609,-664,-126,-469,-57,-376,-424,-477,-795,-481,-806,545,727,-879,210,-114,-783,-156,45,781,369,35,900,904,-2,168,489,-329,608,-287,40,442,362,-560,236,-583,698,544,-154,478,535,-397,363,470,-49,49,631,-62,-293,-419,-528,753,-809,-48,-888,606,-889,-908,672,-783,-921,-198,-428,701,-30,106,500,-106,199,-793,392,873,330,366,45,840,649,-135,-850,174,-338,901,-753,402,-62,554,-579,863,955,-999,-13,851,760,-523,-968,225,-173,-605,-759,306,657,844,168,-270,883,963,-835,624,570,705,333,-293,283,382,926,839,264,602,-940,160,-369,-770,-792,722,321,88,-176,-911,203,486,-175,-529,187,-668,518,-282,162,-165,-34,544,538,-828,-562,-154,591,345,-241,962,801,-632,-921,-710,588,-642,113,128,-242,56,716,-709,232,-870,241,-612,-583,-199,762,-601,-410,-896,-493,664,531,-613,-285,-951,-589,243,819,-195,911,-701,-368,-85,-316])
+
+for (input, expectedOutput) in testCasesFive {
+    let output = secondSmallestValue(in: input)
+    assert(output == expectedOutput, "Was expecting \(expectedOutput) for input \(input), but got \(output)")
+}
